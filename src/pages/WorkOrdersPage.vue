@@ -58,6 +58,12 @@ const filters = reactive({
   per_page: Number(route.query.per_page || 15),
 })
 
+const today = () => {
+  const now = new Date()
+  const offset = now.getTimezoneOffset()
+  return new Date(now.getTime() - offset * 60 * 1000).toISOString().slice(0, 10)
+}
+
 const form = reactive({
   client_id: '',
   assignee_id: '',
@@ -66,11 +72,10 @@ const form = reactive({
   internal_notes: '',
   status: 'draft',
   priority: 'normal',
-  due_date: '',
+  due_date: today(),
 })
 
 const isEditing = computed(() => editingId.value !== null)
-const today = () => new Date().toISOString().slice(0, 10)
 const isOverdue = (order) => order.due_date && order.due_date < today() && !['completed', 'cancelled'].includes(order.status)
 const labelFor = (options, value) => options.find(([key]) => key === value)?.[1] || value
 
@@ -125,7 +130,7 @@ const resetForm = () => {
   editingId.value = null
   Object.assign(form, {
     client_id: '', assignee_id: '', title: '', description: '', internal_notes: '',
-    status: 'draft', priority: 'normal', due_date: '',
+    status: 'draft', priority: 'normal', due_date: today(),
   })
   formError.value = ''
 }
@@ -252,15 +257,15 @@ onMounted(async () => { await Promise.all([loadLookups(), loadOrders()]) })
 
         <div v-else class="overflow-x-auto">
           <table class="w-full min-w-[1050px] text-left text-sm">
-            <thead class="border-b text-xs uppercase tracking-wide text-slate-500"><tr>
+            <thead class="border-b text-sm text-slate-600"><tr>
               <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('order_number')">Order <span>{{ sortArrow('order_number') }}</span></button></th>
               <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('title')">Work <span>{{ sortArrow('title') }}</span></button></th>
-              <th class="px-3 py-3">Client</th>
+              <th class="px-3 py-3 font-semibold">Client</th>
               <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('status')">Status <span>{{ sortArrow('status') }}</span></button></th>
               <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('priority')">Priority <span>{{ sortArrow('priority') }}</span></button></th>
-              <th class="px-3 py-3">Assignee</th>
+              <th class="px-3 py-3 font-semibold">Assignee</th>
               <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('due_date')">Due <span>{{ sortArrow('due_date') }}</span></button></th>
-              <th class="px-3 py-3 text-right">Actions</th>
+              <th class="px-3 py-3 text-right font-semibold">Actions</th>
             </tr></thead>
             <tbody class="divide-y">
               <tr v-for="order in orders" :key="order.id" :class="['hover:bg-slate-50', isOverdue(order) ? 'bg-red-50/60' : '']">
