@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
+import ClientsPage from '@/pages/ClientsPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import pinia from '@/stores'
 import { useAuthStore } from '@/stores/auth'
@@ -21,6 +22,11 @@ const routes = [
         path: '',
         name: 'dashboard',
         component: DashboardPage,
+      },
+      {
+        path: 'clients',
+        name: 'clients',
+        component: ClientsPage,
       },
     ],
   },
