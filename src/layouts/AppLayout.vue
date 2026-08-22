@@ -1,17 +1,18 @@
 <script setup>
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { Button } from '@/components/ui/button'
 
 const navigation = [
   { label: 'Dashboard', to: '/' },
-  { label: 'Clients', to: '#' },
+  { label: 'Clients', to: '/clients' },
   { label: 'Work Orders', to: '#' },
   { label: 'Reports', to: '#' },
 ]
 
 const authStore = useAuthStore()
+const route = useRoute()
 const router = useRouter()
 
 const initials = computed(() => {
@@ -23,6 +24,8 @@ const initials = computed(() => {
     .slice(0, 2)
     .toUpperCase()
 })
+
+const isActive = (to) => to === '/' ? route.path === '/' : route.path.startsWith(to)
 
 const handleLogout = async () => {
   await authStore.logout()
@@ -44,13 +47,16 @@ const handleLogout = async () => {
             <RouterLink
               v-if="item.to !== '#'"
               :to="item.to"
-              class="block rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white"
+              :class="[
+                'block rounded-lg px-3 py-2 text-sm font-medium transition',
+                isActive(item.to) ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-900 hover:text-white',
+              ]"
             >
               {{ item.label }}
             </RouterLink>
             <span
               v-else
-              class="block cursor-not-allowed rounded-lg px-3 py-2 text-sm font-medium text-slate-400"
+              class="block cursor-not-allowed rounded-lg px-3 py-2 text-sm font-medium text-slate-500"
             >
               {{ item.label }}
             </span>
@@ -60,7 +66,9 @@ const handleLogout = async () => {
 
       <div class="min-w-0 flex-1">
         <header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-5 lg:px-8">
-          <p class="text-sm font-medium text-slate-500">OpsFlow</p>
+          <div>
+            <p class="text-sm font-medium text-slate-500">{{ authStore.user?.organization?.name || 'OpsFlow' }}</p>
+          </div>
 
           <div class="flex items-center gap-3">
             <div class="hidden text-right sm:block">
