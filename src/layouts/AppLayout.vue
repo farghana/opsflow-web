@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 const navigation = [
   { label: 'Dashboard', to: '/' },
   { label: 'Clients', to: '/clients' },
-  { label: 'Work Orders', to: '#' },
+  { label: 'Work Orders', to: '/work-orders' },
   { label: 'Reports', to: '#' },
 ]
 
@@ -54,41 +54,24 @@ const handleLogout = async () => {
             >
               {{ item.label }}
             </RouterLink>
-            <span
-              v-else
-              class="block cursor-not-allowed rounded-lg px-3 py-2 text-sm font-medium text-slate-500"
-            >
-              {{ item.label }}
-            </span>
+            <span v-else class="block cursor-not-allowed rounded-lg px-3 py-2 text-sm font-medium text-slate-500">{{ item.label }}</span>
           </template>
         </nav>
       </aside>
 
       <div class="min-w-0 flex-1">
         <header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-5 lg:px-8">
-          <div>
-            <p class="text-sm font-medium text-slate-500">{{ authStore.user?.organization?.name || 'OpsFlow' }}</p>
-          </div>
-
+          <p class="text-sm font-medium text-slate-500">{{ authStore.user?.organization?.name || 'OpsFlow' }}</p>
           <div class="flex items-center gap-3">
             <div class="hidden text-right sm:block">
               <p class="text-sm font-medium text-slate-900">{{ authStore.user?.name }}</p>
               <p class="text-xs text-slate-500">{{ authStore.user?.email }}</p>
             </div>
-
-            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-              {{ initials }}
-            </div>
-
-            <Button variant="outline" size="sm" :disabled="authStore.loading" @click="handleLogout">
-              Sign out
-            </Button>
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">{{ initials }}</div>
+            <Button variant="outline" size="sm" :disabled="authStore.loading" @click="handleLogout">Sign out</Button>
           </div>
         </header>
-
-        <main class="p-5 lg:p-8">
-          <RouterView />
-        </main>
+        <main class="p-5 lg:p-8"><RouterView /></main>
       </div>
     </div>
   </div>
