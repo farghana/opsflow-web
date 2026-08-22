@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
 import ClientsPage from '@/pages/ClientsPage.vue'
+import WorkOrdersPage from '@/pages/WorkOrdersPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import pinia from '@/stores'
 import { useAuthStore } from '@/stores/auth'
@@ -27,6 +28,11 @@ const routes = [
         path: 'clients',
         name: 'clients',
         component: ClientsPage,
+      },
+      {
+        path: 'work-orders',
+        name: 'work-orders',
+        component: WorkOrdersPage,
       },
     ],
   },
