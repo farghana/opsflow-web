@@ -39,6 +39,18 @@ const form = reactive({
 
 const isEditing = computed(() => editingId.value !== null)
 
+const sortIndicator = (field) => {
+  if (filters.sort !== field) return '↕'
+  return filters.direction === 'asc' ? '↑' : '↓'
+}
+
+const sortLabel = (field, label) => {
+  if (filters.sort !== field) return `Sort by ${label}`
+  return filters.direction === 'asc'
+    ? `${label}, sorted ascending. Sort descending`
+    : `${label}, sorted descending. Sort ascending`
+}
+
 const syncQuery = () => {
   router.replace({
     query: {
@@ -203,8 +215,34 @@ onMounted(loadClients)
           <table class="w-full min-w-[760px] text-left text-sm">
             <thead class="border-b text-xs uppercase tracking-wide text-slate-500">
               <tr>
-                <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('name')">Name</button></th>
-                <th class="px-3 py-3"><button class="font-semibold" @click="toggleSort('company_name')">Company</button></th>
+                <th class="px-3 py-3">
+                  <button
+                    class="inline-flex items-center gap-1.5 font-semibold transition hover:text-slate-900"
+                    :aria-label="sortLabel('name', 'Name')"
+                    @click="toggleSort('name')"
+                  >
+                    <span>Name</span>
+                    <span
+                      class="text-sm leading-none"
+                      :class="filters.sort === 'name' ? 'text-slate-900' : 'text-slate-300'"
+                      aria-hidden="true"
+                    >{{ sortIndicator('name') }}</span>
+                  </button>
+                </th>
+                <th class="px-3 py-3">
+                  <button
+                    class="inline-flex items-center gap-1.5 font-semibold transition hover:text-slate-900"
+                    :aria-label="sortLabel('company_name', 'Company')"
+                    @click="toggleSort('company_name')"
+                  >
+                    <span>Company</span>
+                    <span
+                      class="text-sm leading-none"
+                      :class="filters.sort === 'company_name' ? 'text-slate-900' : 'text-slate-300'"
+                      aria-hidden="true"
+                    >{{ sortIndicator('company_name') }}</span>
+                  </button>
+                </th>
                 <th class="px-3 py-3">Contact</th>
                 <th class="px-3 py-3">Location</th>
                 <th class="px-3 py-3 text-right">Actions</th>
