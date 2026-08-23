@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
 import ClientsPage from '@/pages/ClientsPage.vue'
 import WorkOrdersPage from '@/pages/WorkOrdersPage.vue'
+import WorkOrderIntakePage from '@/pages/WorkOrderIntakePage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import pinia from '@/stores'
 import { useAuthStore } from '@/stores/auth'
@@ -33,6 +34,11 @@ const routes = [
         path: 'work-orders',
         name: 'work-orders',
         component: WorkOrdersPage,
+      },
+      {
+        path: 'work-orders/intake',
+        name: 'work-order-intake',
+        component: WorkOrderIntakePage,
       },
     ],
   },
