@@ -28,3 +28,8 @@ export const getTeamMembers = async () => {
   const { data } = await api.get('/api/team-members')
   return data.data ?? data
 }
+
+export const parseWorkOrderIntake = async (text) => {
+  const { data } = await api.post('/api/work-order-intake/parse', { text })
+  return data.data
+}

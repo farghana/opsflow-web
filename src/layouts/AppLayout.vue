@@ -8,6 +8,7 @@ const navigation = [
   { label: 'Dashboard', to: '/' },
   { label: 'Clients', to: '/clients' },
   { label: 'Work Orders', to: '/work-orders' },
+  { label: 'AI Intake', to: '/work-orders/intake' },
   { label: 'Reports', to: '#' },
 ]
 
@@ -25,7 +26,11 @@ const initials = computed(() => {
     .toUpperCase()
 })
 
-const isActive = (to) => to === '/' ? route.path === '/' : route.path.startsWith(to)
+const isActive = (to) => {
+  if (to === '/') return route.path === '/'
+  if (to === '/work-orders') return route.path === '/work-orders'
+  return route.path.startsWith(to)
+}
 
 const handleLogout = async () => {
   await authStore.logout()

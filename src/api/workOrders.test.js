@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import api from './client'
-import { getTeamMembers, getWorkOrder, getWorkOrders } from './workOrders'
+import { getTeamMembers, getWorkOrder, getWorkOrders, parseWorkOrderIntake } from './workOrders'
 
 vi.mock('./client', () => ({
   default: {
@@ -30,5 +30,20 @@ describe('work orders API', () => {
   it('loads organization team members', async () => {
     api.get.mockResolvedValueOnce({ data: { data: [{ id: 1, name: 'Alex' }] } })
     await expect(getTeamMembers()).resolves.toHaveLength(1)
+  })
+
+  it('sends free text to the server-side AI intake endpoint and unwraps the draft', async () => {
+    api.post.mockResolvedValueOnce({
+      data: { data: { title: 'Repair reception display', priority: 'urgent', confidence: 0.94 } },
+    })
+
+    await expect(parseWorkOrderIntake('Northstar needs the reception display fixed by Friday.')).resolves.toMatchObject({
+      title: 'Repair reception display',
+      priority: 'urgent',
+    })
+
+    expect(api.post).toHaveBeenCalledWith('/api/work-order-intake/parse', {
+      text: 'Northstar needs the reception display fixed by Friday.',
+    })
   })
 })
