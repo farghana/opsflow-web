@@ -1,113 +1,69 @@
-# OpsFlow Web
+# OpsFlow
 
-Frontend for **OpsFlow**, an AI-assisted operations workspace that turns unstructured requests into trackable work.
+OpsFlow is an operations management app I built to explore how AI can be useful in a real workflow instead of just adding a chatbot to an app.
 
-This Vue application is the user-facing half of a full-stack portfolio project. It combines an operational dashboard, client management, work-order workflow, activity history, and a human-reviewed AI intake experience.
+Teams can manage clients and work orders, assign work, track deadlines and statuses, and get a quick view of what needs attention from the dashboard.
 
-> This repository contains the Vue SPA. The Laravel API lives in `farghana/opsflow-api`.
+One feature I wanted to experiment with was AI-assisted intake. Instead of filling out a work order manually, you can paste a request such as:
 
-## Product overview
+> Northstar called about the broken display in reception. It needs to be fixed by Friday and it's urgent. Assign it to Alex.
 
-OpsFlow is designed around a common operations problem: work arrives through calls, messages, emails, and notes, while teams still need consistent structured records.
+OpsFlow uses Claude to turn that into a draft work order. The user can review and change everything before saving it.
 
-A user can manage clients and work orders normally or paste a messy request into **AI Intake**. The backend uses Anthropic Claude to create a structured draft. OpsFlow then presents that draft for review and correction before the existing Work Order API is allowed to save anything.
+## Features
 
-## What the app demonstrates
+- Client management
+- Work orders and assignments
+- Status and priority tracking
+- Due dates and overdue work
+- Activity history
+- Operations dashboard
+- AI-assisted work order intake
+- Multi-tenant organizations
+- Authentication
 
-- Vue 3 Composition API with `<script setup>`
-- Vite-based frontend architecture
-- Pinia state management
-- Vue Router authentication guards
-- Axios + Laravel Sanctum session authentication
-- Responsive application shell and navigation
-- Real server-side filtering, sorting, and pagination
-- Accessible sortable table headers and operational status/priority badges
-- Work Order create/edit/delete workflow
-- Client and team-member selectors
-- Overdue work visualization
-- Work Order detail drawer and activity timeline
-- Live tenant-scoped dashboard metrics
-- AI Intake with confidence, warnings, editable review, and explicit human confirmation
-- Vitest component/store coverage
+## Built with
 
-## Main screens
+**Frontend:** Vue 3, Vite, Pinia, Vue Router, Tailwind CSS, shadcn-vue  
+**Backend:** Laravel 12, PostgreSQL, Sanctum  
+**AI:** Anthropic Claude  
+**Testing:** Vitest and Pest
 
-### Dashboard
+## AI intake
 
-Shows live operational metrics from the authenticated organization, including open work, overdue work, high/urgent priorities, recently completed work, and recent Work Orders.
+This was the most interesting part of the project to build.
 
-### Clients
+Claude doesn't create a work order directly. It turns the original request into a suggested draft and tries to match the client and assignee against the organization's existing data.
 
-Searchable, sortable, paginated client management with create/edit/delete workflows.
-
-### Work Orders
-
-The main operations screen provides:
-
-- search and server-side filters
-- client, status, priority, assignee, and overdue filtering
-- sortable columns with visible direction indicators
-- priority and workflow badges
-- due-date and overdue indicators
-- create/edit/delete actions
-- detail view with activity history
-
-### AI Intake
-
-Users paste an unstructured request and receive a structured draft containing suggested client, assignee, title, description, priority, status, and due date.
-
-The UI deliberately keeps a human in control:
+The user reviews the result before anything is saved:
 
 ```text
-unstructured request
-        ↓
-   AI parse
-        ↓
-confidence + warnings
-        ↓
- editable review form
-        ↓
- human confirmation
-        ↓
-normal validated Work Order API
+Request → AI draft → Review/edit → Create work order
 ```
 
-The browser never receives the Anthropic API key and never calls Anthropic directly.
+This makes the AI useful while keeping the final decision with the user.
 
-## Tech stack
+## Running locally
 
-| Area | Technology |
-| --- | --- |
-| Framework | Vue 3 |
-| Build tooling | Vite |
-| State | Pinia |
-| Routing | Vue Router |
-| HTTP | Axios |
-| UI components | shadcn-vue / Tailwind CSS |
-| Testing | Vitest |
-| Backend | Laravel 12 + PostgreSQL |
-| Authentication | Laravel Sanctum |
-| AI provider | Anthropic Claude through the backend |
-
-## Local setup
+Install the frontend dependencies:
 
 ```bash
 npm install
 ```
 
-Create a local `.env`:
+Create `.env`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-Run the Laravel API on port 8000, then start the frontend:
+Start the app:
 
 ```bash
 npm run dev
 ```
 
-The local SPA normally runs at `http://localhost:5173`.
+The Laravel API should be running on `http://localhost:8000`.
 
 ## Tests
 
@@ -115,26 +71,10 @@ The local SPA normally runs at `http://localhost:5173`.
 npm test
 ```
 
-## Authentication flow
+## Backend
 
-OpsFlow uses Laravel Sanctum's stateful SPA authentication. Axios sends credentials to the Laravel origin, obtains the Sanctum CSRF cookie, and restores the authenticated user when the application reloads. Protected routes redirect unauthenticated users to login.
+The Laravel API is in the `farghana/opsflow-api` repository.
 
-For local development, keep the frontend/backend hostnames consistent (for example, use `localhost` for both) so browser cookies behave predictably.
+## Screenshots
 
-## Backend architecture
-
-The Laravel API owns authentication, tenancy, validation, PostgreSQL persistence, operational metrics, and all Anthropic communication. AI output is never trusted as a direct database command; the frontend only receives a reviewable draft.
-
-Repository: `farghana/opsflow-api`
-
-## Portfolio focus
-
-OpsFlow is intentionally more than a collection of CRUD pages. The project is meant to demonstrate end-to-end product engineering: relational domain modelling, tenant isolation, secure SPA authentication, API design, automated tests, operational UX, and practical AI integration with a human-in-the-loop safety boundary.
-
-## Next presentation milestones
-
-- deterministic demo seed data
-- polished product screenshots
-- architecture graphic
-- hosted demo
-- GitHub profile showcase
+Coming soon.
