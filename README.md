@@ -43,6 +43,32 @@ Request → AI draft → Review/edit → Create work order
 
 This makes the AI useful while keeping the final decision with the user.
 
+## Screenshots
+
+### Dashboard
+
+The dashboard gives a quick view of open work, overdue items, priorities, recently completed work, and anything that needs attention.
+
+![OpsFlow dashboard](docs/screenshots/dashboard.webp)
+
+### Work orders
+
+The main work queue includes search, filters, sorting, assignments, priorities, due dates, and overdue highlighting.
+
+![OpsFlow work orders](docs/screenshots/work-orders.webp)
+
+### AI intake
+
+A free-text request is turned into an editable draft. The user can review the client, assignee, status, priority, due date, and description before creating the work order.
+
+![OpsFlow AI intake](docs/screenshots/ai-intake.webp)
+
+### Clients
+
+Clients are kept in a simple searchable directory and can be used throughout the work-order workflow.
+
+![OpsFlow clients](docs/screenshots/clients.webp)
+
 ## Running locally
 
 Install the frontend dependencies:
@@ -74,7 +100,3 @@ npm test
 ## Backend
 
 The Laravel API is in the `farghana/opsflow-api` repository.
-
-## Screenshots
-
-Coming soon.
