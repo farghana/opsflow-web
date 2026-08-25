@@ -49,25 +49,25 @@ This makes the AI useful while keeping the final decision with the user.
 
 The dashboard gives a quick view of open work, overdue items, priorities, recently completed work, and anything that needs attention.
 
-![OpsFlow dashboard](https://raw.githubusercontent.com/farghana/opsflow-web/main/docs/screenshots/dashboard.webp)
+![OpsFlow dashboard](https://github.com/user-attachments/assets/0643519b-af68-40c1-a7f6-2e29e1b8d034)
 
 ### Work orders
 
 The main work queue includes search, filters, sorting, assignments, priorities, due dates, and overdue highlighting.
 
-![OpsFlow work orders](https://raw.githubusercontent.com/farghana/opsflow-web/main/docs/screenshots/work-orders.webp)
+![OpsFlow work orders](https://github.com/user-attachments/assets/861760e1-75aa-4474-ab32-af7f0860c9a4)
 
 ### AI intake
 
 A free-text request is turned into an editable draft. The user can review the client, assignee, status, priority, due date, and description before creating the work order.
 
-![OpsFlow AI intake](https://raw.githubusercontent.com/farghana/opsflow-web/main/docs/screenshots/ai-intake.webp)
+![OpsFlow AI intake](https://github.com/user-attachments/assets/f140c8e1-e2f2-4c96-8b2d-0627d320885d)
 
 ### Clients
 
 Clients are kept in a simple searchable directory and can be used throughout the work-order workflow.
 
-![OpsFlow clients](https://raw.githubusercontent.com/farghana/opsflow-web/main/docs/screenshots/clients.webp)
+![OpsFlow clients](https://github.com/user-attachments/assets/c46e0925-a32e-458c-8cc9-4ca39d66cf82)
 
 ## Running locally
 
